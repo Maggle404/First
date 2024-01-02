@@ -25,8 +25,7 @@
             #[Route('/player/create', name: 'app_player_create')]
     public function save(EntityManagerInterface $EntityManager): Response
     {
-        $name = $request->request->get('name');
-        $atk = 
+        $name = $request->request->get('name'); 
         $player = new Player();
         $player
             ->setName("Jonathan")
@@ -40,9 +39,10 @@
             return $this->redirectToRoute('app_player_show', ['id' => $player->getId()]);
     }
 
-        #[Route('/player/show/{id}', name: 'app_player_show')]
+    #[Route('/player/show/{id}', name: 'app_player_show')]
     public function show(Player $player)
     {
+        $EntityManager->flush();
         return $this->render('player/show.html.twig')
     }
 
