@@ -8,13 +8,11 @@
 </head>
 <body>
     <p>
-        <?php 
-
+    <?php 
         namespace App\Controller;
 
-        use App\Entity\Player;
+        use App\Entity\Players;
         use Doctrine\ORM\EntityManagerInterface;
-        use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         use Symfony\Component\HttpFoundation\Response;
         use Symfony\Component\Routing\Annotation\Route;
         use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,28 +37,18 @@
             return $this->redirectToRoute('app_player_show', ['id' => $player->getId()]);
     }
 
-    #[Route('/player/show/{id}', name: 'app_player_show')]
-    public function show(Player $player)
-    {
-        $EntityManager->flush();
-        return $this->render('player/show.html.twig')
-    }
 
-    #[Route('/player/delete/{id}', name: 'app_player_delete')]
-    public function delete(EntityManagerInterface $EntityManager, Player $player){
-        $EntityManager->remove($player);
-        $EntityManager->flush();
-        return $this->redirectToRoute('app_player_show_all');
+    #[Route('/player/show/{id}', name: 'app_player_show')]
+    public function showId(Player $player){
+        return $this->render( "show.html.twig", ['player' => $player]);
+    }
+    #[Route('/player/show/{nq;e}', name: 'app_player_show')]
+    public function showName(string $name){
+        return $this->render("show.html.twig", ["name" => "John"]);
     }
     
-    #[Route('/player/all', name: 'app_player_show')]
-    public function delete(EntityManagerInterface $EntityManager, Player $player){
-        $EntityManager->remove($player);
-        $EntityManager->flush();
-        return $this->redirectToRoute('app_player_show_all');
-    }
 }
     ?>
     </p>
-    </body>
+</body>
 </html>

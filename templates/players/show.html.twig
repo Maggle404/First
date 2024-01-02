@@ -1,0 +1,24 @@
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>name</th>
+            <th>atk</th>
+            <th>mag</th>
+            <th>hp</th>
+            <th>mana</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for player in players %}
+            <tr>
+                <td>{{ player.id }}</td>
+                <td>{{ player.name }}</td>
+                <td>{{ player.atk }}</td>
+                <td>{{ player.mag }}</td>
+                <td>{{ player.hp }}</td>
+                <td>{{ player.mana }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
