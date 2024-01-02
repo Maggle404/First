@@ -21,9 +21,13 @@
         class TestController extends AbstractController{
     
             #[Route('/player/create', name: 'app_player_create')]
-    public function save(EntityManagerInterface $EntityManager): Response
+    public function show(Entity, Request $request): Response
     {
         $name = $request->request->get('name'); 
+        $atk = $request->request->get('atk'); 
+        $mag = $request->request->get('mag'); 
+        $hp = $request->request->get('hp'); 
+        $mana = $request->request->get('mana'); 
         $player = new Player();
         $player
             ->setName("Jonathan")
@@ -40,11 +44,11 @@
 
     #[Route('/player/show/{id}', name: 'app_player_show')]
     public function showId(Player $player){
-        return $this->render( "show.html.twig", ['player' => $player]);
+        return $this->render("show.html.twig", ['player' => $player]);
     }
-    #[Route('/player/show/{nq;e}', name: 'app_player_show')]
+    #[Route('/player/show/{name}', name: 'app_player_show')]
     public function showName(string $name){
-        return $this->render("show.html.twig", ["name" => "John"]);
+        return $this->render("show.html.twig", ['name' => 'John']);
     }
     
 }
