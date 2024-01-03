@@ -27,6 +27,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
         $entityManager->persist($player);
         $entityManager->flush();
+
+        return $this->render('player/index.html.twig', ["player" => $player]);
     }
 
 
