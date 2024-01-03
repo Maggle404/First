@@ -19,11 +19,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
         
         $player = new Players();
         $player
-            ->setName("Jonathan")
-            ->setAtk("150")
-            ->setMag("150")
-            ->setHp("150")
-            ->setMana("500");
+            ->setName($name)
+            ->setAtk($atk)
+            ->setMag($mag)
+            ->setHp($hp)
+            ->setMana($mana);
 
         $entityManager->persist($player);
         $entityManager->flush();
@@ -32,15 +32,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     }
 
 
-    #[Route('/player/show/{id}', name: 'app_player_show_id')]
-    public function showId(Players $player){
-        return $this->render("show.html.twig", ['player' => $player]);
+    #[Route('/player/show/{id}', name: 'app_player_show')]
+    public function show(Players $player){
+        return $this->render("index.html.twig", ['player' => $player]);
     }
 
-    #[Route('/player/showByName/{name}', name: 'app_player_show_name')]
-    public function showName(string $name){
-        return $this->render("show.html.twig", ['name' => $name]);
+    #[Route('/player/all', name: 'app_player_all')]
+    public function showAll(EntityManagerInterface $entityManager){
+        $players = $entityManager->getRepository(Players::class)->findAll();
+        return $this->render('player/show.html.twig', ["players" => $players]);
+    }
+
+    #[Route('/player/delete/{id}', name:"app_player_delete")]
+    public function delete(EntityManagerInterface $entityManager, Players $player){
+        $entityManager->remove($player);
+        $entityManager->flush();
     }
     
+    #[Route('/player/form', name: "player_form")]
+    public function form(): Response{
+        return $this->render('player/form.html.twig');
+    }
 }
 ?>

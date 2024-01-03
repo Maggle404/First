@@ -1,22 +1,103 @@
-{% extends 'base.html.twig' %}
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: Arial, sans-serif;
+    }
 
-{% block body %}
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
 
-<h1>players</h1>
+    th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
 
-<ul>
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #f2f2f2;
+    }
+
+    input[type="submit"] {
+        padding: 6px 10px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 4px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: whitesmoke;
+    }
+    .action-box {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        margin-bottom: 10px;
+    }
+
+    .action-icon {
+        width: 30px;
+        height: 30px;
+        background-color: #5cb85c;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .action-icon::before {
+        content: "+";
+        color: white;
+        font-weight: bold;
+        font-size: 24px;
+    }
+</style>
+
+<h1 style="text-align: center">Character list</h1>
+
+<div class="action-box">
+    <a class="action-icon" href="http://127.0.0.1:8000/player/formulaire"></a>
+</div>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Attack</th>
+        <th>Magic</th>
+        <th>HP</th>
+        <th>Mana</th>
+        <th>Delete</th>
+        <th>Edit</th>
+    </tr>
+
     {% for player in players %}
         <tr>
-            <th scope="row">{{player.id}}</th>
-            <td>{{player.name}}</td>
-            <td>{{player.atk}}</td>
-            <td>{{player.mag}}</td>
-            <td>{{player.hp}}</td>
-            <td>{{player.mana}}</td>
+            <td>{{ player.id }}</td>
+            <td>{{ player.name }}</td>
+            <td>{{ player.atk }}</td>
+            <td>{{ player.mag }}</td>
+            <td>{{ player.hp }}</td>
+            <td>{{ player.mana }}</td><td>
+                <form action="http://127.0.0.1:8000/player/delete/{{ player.id }}" method="post">
+                    <input type="submit" value="delete">
+                </form>
+            </td>
             <td>
-        
+                <form action="http://127.0.0.1:8000/player/edit_form/{{ player.id }}" method="post">
+                    <input type="submit" value="edit">
+                </form>
+            </td>
         </tr>
     {% endfor %}
-</ul>
-
-
+</table>
