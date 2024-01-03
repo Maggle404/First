@@ -18,6 +18,8 @@ class TestController extends AbstractController
 
     #[Route('/name/{name}')]
     public function test(string $name){
-        return $this->render( "test.html.twig", ["name" => "John"]);
+        return $this->render("test.html.twig", ["name" => "John"]);
     }
 }
+
+?>
