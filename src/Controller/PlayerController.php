@@ -3,12 +3,20 @@ namespace App\Controller;
 
 use App\Entity\Players;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
     class PlayersController extends AbstractController{
-        public function create(EntityManagerInterface $entityManager){
+        public function create(EntityManagerInterface $entityManager, Request $request){
+        
+        $name = $request->request->get("name");
+        $atk = $request->request->get("atk");
+        $mag = $request->request->get("mag");
+        $hp = $request->request->get("hp");
+        $mana = $request->request->get("mana");
+        
         $player = new Players();
         $player
             ->setName("Jonathan")
