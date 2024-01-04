@@ -53,6 +53,7 @@ class PlayerController extends AbstractController
     {
         $entityManager->remove($player);
         $entityManager->flush();
+        return $this->redirectToRoute('app_player_all');
     }
 
     #[Route('/player/form', name: "player_form")]
