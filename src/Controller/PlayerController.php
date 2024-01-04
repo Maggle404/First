@@ -41,11 +41,11 @@ class PlayerController extends AbstractController
         return $this->render("index.html.twig", ['player' => $player]);
     }
 
-    #[Route('/player/all', name: 'app_player_all')]
+    #[Route('/players/all', name: 'app_player_all')]
     public function showAll(EntityManagerInterface $entityManager)
     {
         $players = $entityManager->getRepository(Players::class)->findAll();
-        return $this->render('player/show.html.twig', ["players" => $players]);
+        return $this->render('players/index.html.twig', ["players" => $players]);
     }
 
     #[Route('/player/delete/{id}', name: "app_player_delete")]
