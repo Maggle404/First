@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class PlayerController extends AbstractController
 {
@@ -56,9 +57,40 @@ class PlayerController extends AbstractController
         return $this->redirectToRoute('app_player_all');
     }
 
-    #[Route('/player/form', name: "player_form")]
-    public function form(): Response
+    #[Route('/player/form', name: "app_player_form")]
+    public function form(Request $request,EntityManagerInterface $entityManager): Response
     {
-        return $this->render('player/form.html.twig');
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED');
+
+        $player = new Players();
+        $form = $this->createFormBuilder($player)
+            ->add('name')
+            ->add('atk')
+            ->add('mag')
+            ->add('hp')
+            ->add('mana')
+            ->add('save', SubmitType::class, ['label' => 'Create Player'])
+
+            ->getForm();
+
+        $form->handleRequest($request);
+
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $player=$form->getData();
+            $entityManager->persist($player);
+            $entityManager->flush();
+
+            $players = $entityManager->getRepository(Players::class)->findAll();
+            return $this->render('player/index.html.twig', ["player" => $player, "players" => $players]);
+
+        }
+        $players = $entityManager->getRepository(Players::class)->findAll();
+        return $this->render('player/form.html.twig', [
+            'form' => $form->createView(),
+            "player" => $player,
+            "players" => $players
+        ]);
     }
 }

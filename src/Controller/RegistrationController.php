@@ -41,4 +41,13 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    /*#[Route('/logout', name: 'app_logout')]
+    public function logout (security $security): Response{
+
+        if($this->getuser()){
+            $security ->logout(false);
+        }
+        return $this->redirectToRoute('app_login');
+    }*/
 }
