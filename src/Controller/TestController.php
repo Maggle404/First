@@ -21,5 +21,3 @@ class TestController extends AbstractController
         return $this->render("test.html.twig", ["name" => "John"]);
     }
 }
-
-?>
